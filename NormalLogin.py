@@ -4,17 +4,13 @@ from tkinter import messagebox
 from tkinter.ttk import Treeview
 import database
 
-def addbook():
+def askquerymed():
     pass
-def issuebook():
+def askqueryedu():
     pass
-def returnbook():
+def topquerymed():
     pass
-def viewbook():
-    pass
-def issuedbook():
-    pass
-def deletebook():
+def topqueryedu():
     pass
 def logout():
     win.destroy()
@@ -23,24 +19,22 @@ def logout():
 def nor():
     window=Tk()
     window.withdraw()
-    global win,b1,b2,b3,b4
+    global win,b1,b2,b3,b4,b5,logoname
     win=Tk()
-    win.title('Library')
-    win.geometry("400x400+480+180")
+    win.title('Normal User Dashboard')
+    win.geometry("480x370+480+180")
     win.configure(bg="#00EEEE", bd=9)
     win.resizable(False,False)
-    b1=Button(win, height=2,width=25,text=' Ask Query ',command=addbook)
-    b2=Button(win, height=2,width=25,text=' Issue Book ',command=issuebook)
-    b3=Button(win, height=2,width=25,text=' Return Book ',command=returnbook)
-    b4=Button(win, height=2,width=25,text=' View Book ',command=viewbook)
-    b5=Button(win, height=2,width=25,text=' Issued Book ',command=issuedbook)
-    b6=Button(win, height=2,width=25,text=' Delete Book ',command=deletebook)
-    b7=Button(win, height=2,width=25,text=' LogOut ',command=logout)
-    b1.place(x=110,y=30)
-    b2.place(x=110,y=80)
-    b3.place(x=110,y=130)
-    b4.place(x=110,y=180)
-    b5.place(x=110,y=230)
-    b6.place(x=110,y=280)
-    b7.place(x=110,y=330)
+    logoname=Label(win,text="SocioAI Community", bg=	"#3A5FCD",fg="#98F5FF",height=1, width=20,font='Arial 15 bold')
+    b1=Button(win, height=2,width=40,text=' Ask Nursing related Query ',command=askquerymed)
+    b2=Button(win, height=2,width=40,text=' Ask Education related Query ',command=askqueryedu)
+    b3=Button(win, height=2,width=40,text=' View Top Asked Nursing related Queries ',command=topquerymed)
+    b4=Button(win, height=2,width=40,text=' View Top Asked Education related Queries ',command=topqueryedu)
+    b5=Button(win, height=2,width=40,text=' LogOut ',command=logout)
+    logoname.place(x=110,y=20)
+    b1.place(x=85,y=60)
+    b2.place(x=85,y=110)
+    b3.place(x=85,y=160)
+    b4.place(x=85,y=210)
+    b5.place(x=85,y=260)
     win.mainloop()

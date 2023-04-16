@@ -9,10 +9,10 @@ import database
 def admin():
     window=Tk()
     window.withdraw()
-    global win,b1,b2,b3,b4,b5,b6,cur,con
+    global win,b1,b2,b3,b4,b5,b6,b7,b8,cur,con
     win=Tk()
     win.title('Admin')
-    win.geometry("400x400+480+180")
+    win.geometry("400x480+480+180")
     win.configure(bg="#00EEEE", bd=9)
     win.resizable(False,False)
     b1=Button(win, height=2,width=25,text=' View User ',command=viewNormaluser)
@@ -20,13 +20,17 @@ def admin():
     b3=Button(win, height=2,width=25,text=' Pro User Requests ',command=permitProuser)
     b4=Button(win, height=2,width=25,text=' Approve Pro', command=approvePro)
     b5=Button(win, height=2,width=25,text=' Delete User ',command=deleteuser)
-    b6=Button(win, height=2,width=25,text=' LogOut ',command=logout)
-    b1.place(x=110,y=70)
-    b2.place(x=110,y=120)
-    b3.place(x=110,y=170)
-    b4.place(x=110,y=220)
-    b5.place(x=110,y=270)
-    b6.place(x=110,y=320)
+    b6=Button(win, height=2,width=25,text=' View Query Requests ',command=queryReq)
+    b7=Button(win, height=2,width=25,text=' Approve Query from Pro ',command=approveReq)
+    b8=Button(win, height=2,width=25,text=' LogOut ',command=logout)
+    b1.place(x=110,y=40)
+    b2.place(x=110,y=90)
+    b3.place(x=110,y=140)
+    b4.place(x=110,y=190)
+    b5.place(x=110,y=240)
+    b6.place(x=110,y=290)
+    b7.place(x=110,y=340)
+    b8.place(x=110,y=390)
     win.mainloop()
 
 def logout():
@@ -36,6 +40,100 @@ def logout():
     except:
         print("Logged Out")
     # home()
+
+def queryReq():
+    win=Tk()
+    win.title('Query Add Requests')
+    win.geometry("500x300+270+180")
+    win.configure(bg="#00EEEE", bd=9)
+    win.resizable(False,False)
+    treeview=Treeview(win,columns=("Query","Solution"),show='headings')
+    treeview.heading("Query", text="Query")
+    treeview.heading("Solution", text="Solution")
+    treeview.column("Query", anchor='center')
+    treeview.column("Solution", anchor='center')
+    index=0
+    iid=0
+    database.connectdb()
+    database.cur.execute('SELECT * FROM AddQuery')
+    details=database.cur.fetchall()
+    for row in details:
+        treeview.insert("",index,iid,value=row)
+        index=iid=index+1
+    treeview.pack()
+    win.mainloop()
+    database.closedb()
+
+
+def approveReq():
+    global win
+    win.destroy()
+    win=Tk()
+    win.title('Approve Pro')
+    win.geometry("400x400+480+180")
+    win.configure(bg="#00EEEE", bd=9)
+    win.resizable(False,False)
+    usid=Label(win,text='USER ID')
+    paswrd=Label(win,text='ADMIN \n PASSWORD')
+    global e1
+    e1=Entry(win)
+    global e2,b2
+    e2=Entry(win)
+    e2.config(show="*")
+    b1=Button(win, height=2,width=17,text=' APPROVE QUERY ',command=addReq)
+    b2=Button(win, height=2,width=17,text=' DISAPPROVE QUERY ',command=cancelReq)
+    b3=Button(win, height=2,width=17,text=' CLOSE ',command=closeusers)
+    usid.place(x=80,y=100)
+    paswrd.place(x=70,y=140)
+    e1.place(x=180,y=100)
+    e2.place(x=180,y=142)
+    b1.place(x=180,y=180)
+    b2.place(x=180,y=230)
+    b3.place(x=180,y=280)
+    win.mainloop()
+
+def addReq():
+    database.connectdb()
+
+    if e2.get()=='admin':
+        database.cur.execute('SELECT * FROM AddQuery')
+        for i in range(database.cur.rowcount):
+            data=database.cur.fetchone()
+            if(data[0]==int(e1.get())):
+                q1='INSERT INTO ProUser VALUE("%i","%s","%s","%i","%i","%s","%s")'
+                database.cur.execute(q1%(data[0],data[1],data[2],data[3],data[4],data[5],data[6]))
+                database.con.commit()
+                q='DELETE FROM Adminpermit WHERE u_id="%i"'
+                database.cur.execute(q%(int(e1.get())))
+                database.con.commit()
+                win.destroy()
+                messagebox.showinfo("PRO ADDED", "Pro User Added")
+                database.closedb()
+            else:
+                win.destroy()
+                messagebox.showinfo("No Request", "Request not found with given id")
+                database.closedb()
+        admin()
+    else:
+        win.destroy()
+        messagebox.showinfo("Error", "Incorrect Password")
+        database.closedb()
+        admin()
+
+def cancelReq():
+    database.connectdb()
+    if e2.get()=='admin':
+        
+        q='DELETE FROM Adminpermit WHERE u_id="%i"'
+        database.cur.execute(q%(int(e1.get())))
+        database.con.commit()
+        win.destroy()
+        messagebox.showinfo("Cancelled", "Pro request cancelled")
+        database.closedb()
+        admin()
+    else:
+        messagebox.showinfo("Error", "Incorrect Password")
+        database.closedb()
 
 def permitProuser():
     win=Tk()

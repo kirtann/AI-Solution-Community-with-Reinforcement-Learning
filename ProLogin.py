@@ -6,14 +6,54 @@ import database
 
 def askquerymed():
     pass
+
 def askqueryedu():
     pass
+
 def topquerymed():
     pass
 def topqueryedu():
     pass
 def alterdb():
-    pass
+    global win
+    win.destroy()
+    win=Tk()
+    win.title('Add query ans solution to dataset')
+    win.geometry("400x400+480+180")
+    win.configure(bg="#00EEEE", bd=9)
+    win.resizable(False,False)
+    usid=Label(win,text='Query')
+    paswrd=Label(win,text='Solution')
+    global e1
+    e1=Entry(win)
+    global e2,b2
+    e2=Entry(win)
+    b1=Button(win, height=2,width=17,text=' Add Query ',command=addQuery)
+    # b2=Button(win, height=2,width=17,text=' DISAPPROVE ',command=cancelPro)
+    b2=Button(win, height=2,width=17,text=' Back to dashboard ',command=closeusers)
+    usid.place(x=80,y=100)
+    paswrd.place(x=70,y=140)
+    e1.place(x=180,y=100)
+    e2.place(x=180,y=142)
+    b1.place(x=180,y=180)
+    b2.place(x=180,y=230)
+    win.mainloop()
+
+def addQuery():
+    database.connectdb()
+    q='INSERT INTO AddQuery VALUE("%s","%s")'
+    database.cur.execute(q%(e1.get(),e2.get()))
+    database.con.commit()
+    win.destroy()
+    messagebox.showinfo("Query Request", "Request sent, waiting for admin to confirm data")
+    database.closedb()
+            # destroy()
+
+
+def closeusers():
+    win.destroy()
+    pro()
+
 def logout():
     win.destroy()
 

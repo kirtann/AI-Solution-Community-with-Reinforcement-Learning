@@ -15,11 +15,13 @@ def connectdb():
         l='CREATE TABLE IF NOT EXISTS NormalUser(u_id int(10),name varchar(30),password varchar(20),ph_no int(10),fav_query_pointer int(10))'
         k='CREATE TABLE IF NOT EXISTS ProUser(u_id int(10),name varchar(30),password varchar(20),ph_no int(10),fav_query_pointer int(10),alter_query varchar(20),alter_solution varchar(20))'
         m='CREATE TABLE IF NOT EXISTS Adminpermit(u_id int(10),name varchar(30),password varchar(20),ph_no int(10),fav_query_pointer int(10),alter_query varchar(20),alter_solution varchar(20))'
-        b='CREATE TABLE IF NOT EXISTS Querytype(type_id int(10),query_name varchar(20))'
-        j='CREATE TABLE IF NOT EXISTS Query(keyword varchar(10),type_id int(10), query_globalpointer int(5))'
+        n='CREATE TABLE IF NOT EXISTS AddQuery(alter_query varchar(100),alter_solution varchar(50))'
+        b='CREATE TABLE IF NOT EXISTS QueryHospital(keyword varchar(10),solution varchar(10), query_pointer int(5))'
+        j='CREATE TABLE IF NOT EXISTS QueryEducation(keyword varchar(10),solution varchar(10), query_pointer int(5))'
         cur.execute(l)
         cur.execute(k)
         cur.execute(m)
+        cur.execute(n)
         cur.execute(b)
         cur.execute(j)
         enter=enter+1
@@ -32,4 +34,3 @@ def closedb():
     con.close()
 
 enter=1
-# connectdb()

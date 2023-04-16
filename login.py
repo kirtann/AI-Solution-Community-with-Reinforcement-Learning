@@ -26,7 +26,7 @@ def loginNormal():
     for i in range(database.cur.rowcount):
         data=database.cur.fetchone() 
         if e1.get().strip()==str(data[0]) and e2.get().strip()==str(data[2]):
-            messagebox.showinfo("Welcome", "Welcome user")
+            messagebox.showinfo("Welcome", "Welcome user "+ data[1])
             database.closedb()
             NormalLogin.nor()
             break
@@ -47,7 +47,7 @@ def loginPro():
     for i in range(database.cur.rowcount):
         data=database.cur.fetchone() 
         if e1.get().strip()==str(data[0]) and e2.get().strip()==str(data[2]):
-            messagebox.showinfo("Welcome", "Welcome Pro User")
+            messagebox.showinfo("Welcome", "Welcome Pro User "+ data[1])
             database.closedb()
             ProLogin.pro()
             break
@@ -73,7 +73,7 @@ def home():
         window.iconbitmap()
         window.resizable(False,False)
         window.title('SocioAI Login')
-        photo = PhotoImage(file="SOCIOAI//iconlogin.png")
+        photo = PhotoImage(file="iconlogin.png")
         window.iconphoto(False, photo)
         window.geometry("400x480+480+180")
         window.configure(bg="#00EEEE", bd=9)
@@ -98,10 +98,9 @@ def home():
         b3.place(x=165,y=285)
         b4.place(x=165,y=355)
         e3.place(x=140,y=450)
-        e3.bind("<Button-1>", lambda e: callback("https://github.com/kirtann"))
+        e3.bind("<Button-1>", lambda e: callback("https://github.com/kirtann/AI-Solution-Community-with-Reinforcement-Learning"))
         window.mainloop()
     except Exception:
         window.destroy()
 
-# enter=1
 home()

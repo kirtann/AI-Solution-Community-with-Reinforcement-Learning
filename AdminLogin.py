@@ -44,12 +44,14 @@ def logout():
 def queryReq():
     win=Tk()
     win.title('Query Add Requests')
-    win.geometry("500x300+270+180")
+    win.geometry("650x300+270+180")
     win.configure(bg="#00EEEE", bd=9)
     win.resizable(False,False)
-    treeview=Treeview(win,columns=("Query","Solution"),show='headings')
+    treeview=Treeview(win,columns=("ID","Query","Solution"),show='headings')
+    treeview.heading("ID", text="ID")
     treeview.heading("Query", text="Query")
     treeview.heading("Solution", text="Solution")
+    treeview.column("ID", anchor='center')
     treeview.column("Query", anchor='center')
     treeview.column("Solution", anchor='center')
     index=0
@@ -69,50 +71,81 @@ def approveReq():
     global win
     win.destroy()
     win=Tk()
-    win.title('Approve Pro')
+    win.title('Add Query To Backend')
     win.geometry("400x400+480+180")
     win.configure(bg="#00EEEE", bd=9)
     win.resizable(False,False)
-    usid=Label(win,text='USER ID')
+    usid=Label(win,text='Query ID')
     paswrd=Label(win,text='ADMIN \n PASSWORD')
-    global e1
-    e1=Entry(win)
-    global e2,b2
-    e2=Entry(win)
-    e2.config(show="*")
-    b1=Button(win, height=2,width=17,text=' APPROVE QUERY ',command=addReq)
-    b2=Button(win, height=2,width=17,text=' DISAPPROVE QUERY ',command=cancelReq)
-    b3=Button(win, height=2,width=17,text=' CLOSE ',command=closeusers)
+    global e10
+    e10=Entry(win)
+    global e11,b2
+    e11=Entry(win)
+    b1=Button(win, height=2,width=25,text=' APPROVE QUERY IN NURSING ',command=addReqNursing)
+    b2=Button(win, height=2,width=25,text=' APPROVE QUERY IN EDUCATION  ',command=addReqEducation)
+    b3=Button(win, height=2,width=25,text=' DISAPPROVE QUERY ',command=cancelReq)
+    b4=Button(win, height=2,width=25,text=' CLOSE ',command=closeusers)
     usid.place(x=80,y=100)
     paswrd.place(x=70,y=140)
-    e1.place(x=180,y=100)
-    e2.place(x=180,y=142)
+    e10.place(x=180,y=100)
+    e11.place(x=180,y=142)
     b1.place(x=180,y=180)
     b2.place(x=180,y=230)
     b3.place(x=180,y=280)
+    b4.place(x=180,y=330)
     win.mainloop()
 
-def addReq():
+def addReqNursing():
     database.connectdb()
 
-    if e2.get()=='admin':
+    if e11.get()=='admin':
         database.cur.execute('SELECT * FROM AddQuery')
         for i in range(database.cur.rowcount):
-            data=database.cur.fetchone()
-            if(data[0]==int(e1.get())):
-                q1='INSERT INTO ProUser VALUE("%i","%s","%s","%i","%i","%s","%s")'
-                database.cur.execute(q1%(data[0],data[1],data[2],data[3],data[4],data[5],data[6]))
+            data1=database.cur.fetchone()
+            if(data1[0]==int(e10.get())):
+                q1='INSERT INTO QueryHospital VALUE("%s","%s","%i")'
+                database.cur.execute(q1%(data1[1],data1[2],0))
                 database.con.commit()
-                q='DELETE FROM Adminpermit WHERE u_id="%i"'
-                database.cur.execute(q%(int(e1.get())))
+                q='DELETE FROM AddQuery WHERE id="%i"'
+                database.cur.execute(q%(int(e10.get())))
                 database.con.commit()
                 win.destroy()
-                messagebox.showinfo("PRO ADDED", "Pro User Added")
+                messagebox.showinfo("NURSING DATASET UPDATED", "Query Approved")
                 database.closedb()
-            else:
+                break
+        else:
+            win.destroy()
+            messagebox.showinfo("No Request", "Request not found with given id")
+            database.closedb()
+        admin()
+    else:
+        win.destroy()
+        messagebox.showinfo("Error", "Incorrect Password")
+        database.closedb()
+        admin()
+
+def addReqEducation():
+    database.connectdb()
+
+    if e11.get()=='admin':
+        database.cur.execute('SELECT * FROM AddQuery')
+        for i in range(database.cur.rowcount):
+            data1=database.cur.fetchone()
+            if(data1[0]==int(e10.get())):
+                q1='INSERT INTO QueryEducation VALUE("%s","%s","%i")'
+                database.cur.execute(q1%(data1[1],data1[2],0))
+                database.con.commit()
+                q='DELETE FROM AddQuery WHERE id="%i"'
+                database.cur.execute(q%(int(e10.get())))
+                database.con.commit()
                 win.destroy()
-                messagebox.showinfo("No Request", "Request not found with given id")
+                messagebox.showinfo("EDUCATION DATASET UPDATED", "Query Approved")
                 database.closedb()
+                break
+        else:
+            win.destroy()
+            messagebox.showinfo("No Request", "Request not found with given id")
+            database.closedb()
         admin()
     else:
         win.destroy()
@@ -122,13 +155,13 @@ def addReq():
 
 def cancelReq():
     database.connectdb()
-    if e2.get()=='admin':
+    if e11.get()=='admin':
         
-        q='DELETE FROM Adminpermit WHERE u_id="%i"'
-        database.cur.execute(q%(int(e1.get())))
+        q='DELETE FROM AddQuery WHERE id="%i"'
+        database.cur.execute(q%(int(e10.get())))
         database.con.commit()
         win.destroy()
-        messagebox.showinfo("Cancelled", "Pro request cancelled")
+        messagebox.showinfo("Cancelled", "Query addition request cancelled")
         database.closedb()
         admin()
     else:
@@ -207,10 +240,11 @@ def addPro():
                 win.destroy()
                 messagebox.showinfo("PRO ADDED", "Pro User Added")
                 database.closedb()
-            else:
-                win.destroy()
-                messagebox.showinfo("No Request", "Request not found with given id")
-                database.closedb()
+                break
+        else:
+            win.destroy()
+            messagebox.showinfo("No Request", "Request not found with given id")
+            database.closedb()
         admin()
     else:
         win.destroy()

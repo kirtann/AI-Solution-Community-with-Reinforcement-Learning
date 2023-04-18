@@ -3,11 +3,12 @@ import pymysql as p
 from tkinter import messagebox
 from tkinter.ttk import Treeview
 import database
+import Search
 
 def askquerymed():
-    pass
+    Search.searchPage()
 def askqueryedu():
-    pass
+    Search.searchPage()
 def topquerymed():
     pass
 def topqueryedu():
@@ -20,9 +21,11 @@ def nor():
     window=Tk()
     window.withdraw()
     global win,b1,b2,b3,b4,b5,logoname
-    win=Tk()
+    win=Toplevel()
     win.title('Normal User Dashboard')
     win.geometry("480x370+480+180")
+    icon = PhotoImage(file="lpu.png")
+    win.iconphoto(False, icon)
     win.configure(bg="#00EEEE", bd=9)
     win.resizable(False,False)
     logoname=Label(win,text="SocioAI Community", bg=	"#3A5FCD",fg="#98F5FF",height=1, width=20,font='Arial 15 bold')

@@ -3,12 +3,13 @@ import pymysql as p
 from tkinter import messagebox
 from tkinter.ttk import Treeview
 import database
+import Search
 
 def askquerymed():
-    pass
+    Search.searchPage()
 
 def askqueryedu():
-    pass
+    Search.searchPage()
 
 def topquerymed():
     pass
@@ -17,9 +18,11 @@ def topqueryedu():
 def alterdb():
     global win
     win.destroy()
-    win=Tk()
+    win=Toplevel()
     win.title('Add query ans solution to dataset')
     win.geometry("400x400+480+180")
+    icon = PhotoImage(file="lpu.png")
+    win.iconphoto(False, icon)
     win.configure(bg="#00EEEE", bd=9)
     win.resizable(False,False)
     usid=Label(win,text='Query')
@@ -41,12 +44,13 @@ def alterdb():
 
 def addQuery():
     database.connectdb()
-    q='INSERT INTO AddQuery VALUE("%s","%s")'
+    q='INSERT INTO AddQuery(alter_query,alter_solution) VALUE("%s","%s")'
     database.cur.execute(q%(e1.get(),e2.get()))
     database.con.commit()
     win.destroy()
     messagebox.showinfo("Query Request", "Request sent, waiting for admin to confirm data")
     database.closedb()
+    pro()
             # destroy()
 
 
@@ -62,10 +66,12 @@ def pro():
     window=Tk()
     window.withdraw()
     global win,b1,b2,b3,b4,b5,b6,logoname
-    win=Tk()
+    win=Toplevel()
     win.title('Pro User Dashboard')
     win.geometry("480x410+480+180")
     win.configure(bg="#00EEEE", bd=9)
+    icon = PhotoImage(file="lpu.png")
+    win.iconphoto(False, icon)
     win.resizable(False,False)
     logoname=Label(win,text="SocioAI Community", bg="#3A5FCD",fg="#98F5FF",height=1, width=20,font='Arial 15 bold')
     b1=Button(win, height=2,width=40,text=' Ask Nursing related Query ',command=askquerymed)

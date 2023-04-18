@@ -10,10 +10,12 @@ def admin():
     window=Tk()
     window.withdraw()
     global win,b1,b2,b3,b4,b5,b6,b7,b8,cur,con
-    win=Tk()
+    win=Toplevel()
     win.title('Admin')
     win.geometry("400x480+480+180")
     win.configure(bg="#00EEEE", bd=9)
+    icon = PhotoImage(file="lpu.png")
+    win.iconphoto(False, icon)
     win.resizable(False,False)
     b1=Button(win, height=2,width=25,text=' View User ',command=viewNormaluser)
     b2=Button(win, height=2,width=25,text=' View Pro User ',command=viewProuser)
@@ -42,10 +44,12 @@ def logout():
     # home()
 
 def queryReq():
-    win=Tk()
+    win=Toplevel()
     win.title('Query Add Requests')
     win.geometry("650x300+270+180")
     win.configure(bg="#00EEEE", bd=9)
+    icon = PhotoImage(file="lpu.png")
+    win.iconphoto(False, icon)
     win.resizable(False,False)
     treeview=Treeview(win,columns=("ID","Query","Solution"),show='headings')
     treeview.heading("ID", text="ID")
@@ -70,10 +74,12 @@ def queryReq():
 def approveReq():
     global win
     win.destroy()
-    win=Tk()
+    win=Toplevel()
     win.title('Add Query To Backend')
     win.geometry("400x400+480+180")
     win.configure(bg="#00EEEE", bd=9)
+    icon = PhotoImage(file="lpu.png")
+    win.iconphoto(False, icon)
     win.resizable(False,False)
     usid=Label(win,text='Query ID')
     paswrd=Label(win,text='ADMIN \n PASSWORD')
@@ -169,10 +175,12 @@ def cancelReq():
         database.closedb()
 
 def permitProuser():
-    win=Tk()
+    win=Toplevel()
     win.title('Pro User Requests')
     win.geometry("800x300+270+180")
     win.configure(bg="#00EEEE", bd=9)
+    icon = PhotoImage(file="lpu.png")
+    win.iconphoto(False, icon)
     win.resizable(False,False)
     treeview=Treeview(win,columns=("User ID","Name","Password","Mobile No","Favourite Query"),show='headings')
     treeview.heading("User ID", text="User ID")
@@ -198,10 +206,12 @@ def permitProuser():
 def approvePro():
     global win
     win.destroy()
-    win=Tk()
+    win=Toplevel()
     win.title('Approve Pro')
     win.geometry("400x400+480+180")
     win.configure(bg="#00EEEE", bd=9)
+    icon = PhotoImage(file="lpu.png")
+    win.iconphoto(False, icon)
     win.resizable(False,False)
     usid=Label(win,text='USER ID')
     paswrd=Label(win,text='ADMIN \n PASSWORD')
@@ -268,10 +278,12 @@ def cancelPro():
         database.closedb()
 
 def viewProuser():
-    win=Tk()
+    win=Toplevel()
     win.title('View User')
     win.geometry("800x300+270+180")
     win.configure(bg="#00EEEE", bd=9)
+    icon = PhotoImage(file="lpu.png")
+    win.iconphoto(False, icon)
     win.resizable(False,False)
     treeview=Treeview(win,columns=("User ID","Name","Password","Mobile No","Favourite Query"),show='headings')
     treeview.heading("User ID", text="User ID")
@@ -295,10 +307,12 @@ def viewProuser():
     database.closedb()
 
 def viewNormaluser():
-    win=Tk()
+    win=Toplevel()
     win.title('View User')
     win.geometry("800x300+270+180")
     win.configure(bg="#00EEEE", bd=9)
+    icon = PhotoImage(file="lpu.png")
+    win.iconphoto(False, icon)
     win.resizable(False,False)
     treeview=Treeview(win,columns=("User ID","Name","Password","Mobile No","Favourite Query"),show='headings')
     treeview.heading("User ID", text="User ID")
@@ -327,10 +341,12 @@ def closeusers():
 def deleteuser():
     global win
     win.destroy()
-    win=Tk()
+    win=Toplevel()
     win.title('Delete user')
     win.geometry("400x400+480+180")
     win.configure(bg="#00EEEE", bd=9)
+    icon = PhotoImage(file="lpu.png")
+    win.iconphoto(False, icon)
     win.resizable(False,False)
     usid=Label(win,text='USER ID')
     paswrd=Label(win,text='ADMIN \n PASSWORD')

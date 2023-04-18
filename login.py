@@ -11,8 +11,6 @@ import RegisterPro
 
 print(bannerTop())
 
-
-
 def loginAdmin():
     if e1.get()=='admin' and e2.get()=='admin':
         AdminLogin.admin();
@@ -73,8 +71,8 @@ def home():
         window.iconbitmap()
         window.resizable(False,False)
         window.title('SocioAI Login')
-        photo = PhotoImage(file="iconlogin.png")
-        window.iconphoto(False, photo)
+        icon = PhotoImage(file="lpu.png")
+        window.iconphoto(False, icon)
         window.geometry("400x480+480+180")
         window.configure(bg="#00EEEE", bd=9)
         logoname=Label(window,text="SocioAI Login", bg=	"#3A5FCD",fg="#98F5FF",height=1, width=11,font='Arial 15 bold')
@@ -103,4 +101,4 @@ def home():
     except Exception:
         window.destroy()
 
-home()
+# home()

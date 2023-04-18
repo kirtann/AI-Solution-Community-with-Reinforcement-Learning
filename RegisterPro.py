@@ -40,6 +40,8 @@ def registerPro():
     win=Tk()
     win.title('Register Pro Page')
     win.geometry("600x600+300+50")
+    icon = PhotoImage(file="lpu.png")
+    win.iconphoto(False, icon)
     win.configure(bg="#00EEEE", bd=9)
     win.resizable(False,False)
     logoname=Label(win,text="JOIN OUR ADVANCED SERVICE", bg="#3A5FCD",fg="#98F5FF",height=1, width=40,font='Arial 15 bold')

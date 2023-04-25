@@ -37,7 +37,7 @@ def registerPro():
     window=Tk()
     window.withdraw()
     global win,e4,e5,e6,e4,e7,b5,b6
-    win=Tk()
+    win=Toplevel()
     win.title('Register Pro Page')
     win.geometry("600x600+300+50")
     icon = PhotoImage(file="lpu.png")

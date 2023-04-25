@@ -1,10 +1,14 @@
 from tkinter import *
 from tkinter import messagebox
+import webbrowser
 import login
 
 def startlog():
     root.destroy()
     login.home()
+
+def callback(url):
+    webbrowser.open_new(url)
 
 root = Tk()
 root.title("SocioAI")
@@ -33,4 +37,5 @@ end.pack(pady=5)
 
 contact = Button(root,text="Contact us!",bg="blue",fg="cyan",font = ("Calibri",13))
 contact.pack(side="bottom")
+contact.bind("<Button-1>", lambda e: callback("https://github.com/kirtann/AI-Solution-Community-with-Reinforcement-Learning"))
 root.mainloop()

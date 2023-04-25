@@ -33,10 +33,11 @@ def register():
         messagebox.showerror('Number not valid', 'Error: This is a not valid mobile number!')
 
 def registerUser():
+
     window=Tk()
     window.withdraw()
     global win,e4,e5,e6,e4,e7,b5,b6,cur,con
-    win=Tk()
+    win=Toplevel()
     win.title('Register Page')
     win.geometry("600x600+300+50")
     icon = PhotoImage(file="lpu.png")

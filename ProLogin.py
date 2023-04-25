@@ -3,10 +3,11 @@ import pymysql as p
 from tkinter import messagebox
 from tkinter.ttk import Treeview
 import database
+import Search2
 import Search
 
 def askquerymed():
-    Search.searchPage()
+    Search2.searchPage()
 
 def askqueryedu():
     Search.searchPage()

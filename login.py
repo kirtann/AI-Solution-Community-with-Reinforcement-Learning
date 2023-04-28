@@ -100,3 +100,5 @@ def home():
         window.mainloop()
     except Exception:
         window.destroy()
+
+# home()

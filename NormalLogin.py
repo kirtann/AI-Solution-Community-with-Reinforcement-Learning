@@ -1,6 +1,4 @@
 from tkinter import *
-import pymysql as p
-from tkinter import messagebox
 from tkinter.ttk import Treeview
 import database
 import Search2
@@ -8,12 +6,68 @@ import Search
 
 def askquerymed():
     Search2.searchPage()
+
 def askqueryedu():
     Search.searchPage()
+
 def topquerymed():
-    pass
+    win=Toplevel()
+    win.title('Top Medicine queries')
+    # win.geometry("800x300+270+180")
+    win.configure(bg="#00EEEE", bd=9)
+    icon = PhotoImage(file="lpu.png")
+    win.iconphoto(False, icon)
+    win.resizable(False,False)
+    treeview=Treeview(win,columns=("Disease","Medicine","Reward"),show='headings')
+    treeview.heading("Disease", text="Disease")
+    treeview.heading("Medicine", text="Medicine")
+    treeview.heading("Reward", text="Reward")
+    treeview.column("Disease", anchor='center')
+    treeview.column("Medicine", anchor='center')
+    treeview.column("Reward", anchor='center')
+    index=0
+    iid=0
+    database.connectdb()
+    database.cur.execute('SELECT * FROM QueryHospital ORDER BY query_pointer DESC')
+    details=database.cur.fetchall()
+    for row in details:
+        treeview.insert("",index,iid,value=row)
+        index=iid=index+1
+    treeview.pack()
+    win.mainloop()
+    database.closedb()
+
 def topqueryedu():
-    pass
+    win=Toplevel()
+    win.title('Top Education queries')
+    # win.geometry("800x300+270+180")
+    win.configure(bg="#00EEEE", bd=9)
+    icon = PhotoImage(file="lpu.png")
+    win.iconphoto(False, icon)
+    win.resizable(False,False)
+    treeview=Treeview(win,columns=("Name","Package","Ranking","Criteria","Reward"),show='headings')
+    treeview.heading("Name", text="Name")
+    treeview.heading("Package", text="Package")
+    treeview.heading("Ranking", text="Ranking")
+    treeview.heading("Criteria", text="Criteria")
+    treeview.heading("Reward", text="Reward")
+    treeview.column("Name", anchor='center')
+    treeview.column("Package", anchor='center')
+    treeview.column("Ranking", anchor='center')
+    treeview.column("Criteria", anchor='center')
+    treeview.column("Reward", anchor='center')
+    index=0
+    iid=0
+    database.connectdb()
+    database.cur.execute('SELECT * FROM QueryEducation ORDER BY query_pointer DESC')
+    details=database.cur.fetchall()
+    for row in details:
+        treeview.insert("",index,iid,value=row)
+        index=iid=index+1
+    treeview.pack()
+    win.mainloop()
+    database.closedb()
+
 def logout():
     win.destroy()
 

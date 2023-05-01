@@ -1,3 +1,4 @@
+# SocioAI
 from tkinter import *
 import pymysql as p
 from tkinter import messagebox
